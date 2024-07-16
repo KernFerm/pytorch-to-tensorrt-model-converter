@@ -1,0 +1,4 @@
+torch
+pycuda
+numpy
+tensorrt
