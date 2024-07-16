@@ -24,6 +24,8 @@ A step-by-step series of examples that tell you how to get a development environ
 
 If you are familiar with Pipfile and wish to use `pipenv` for managing dependencies, ensure you have Python `3.11.6`
 
+- If you do not have `Pet Python` Recommended **Python 3.11.6** [Python 3.11.6](https://github.com/KernFerm/Py3.11.6installer)
+
 1. **Install pipenv if you haven't already:**
 
 ```
