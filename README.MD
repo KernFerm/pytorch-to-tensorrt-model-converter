@@ -35,8 +35,8 @@ pip install pipenv
 2. Clone the Repository:
 
 ```
-git clone https://www.github.com/kernferm/nvidia-converter
-cd nvidia-converter
+git clone https://www.github.com/kernferm/pytorch-to-tensorrt-model-converter
+cd pytorch-to-tensorrt-model-converter
 ```
 
 3. Install Dependencies:
@@ -58,8 +58,8 @@ pipenv shell
 1. Clone the Repository:
 
 ```
-git clone https://www.github.com/kernferm/nvidia-converter
-cd nvidia-converter
+git clone https://www.github.com/kernferm/pytorch-to-tensorrt-model-converter
+cd pytorch-to-tensorrt-model-converter
 ```
 
 2. Create and Activate a Virtual Environment:
