@@ -10,7 +10,17 @@ cuda.init()
 TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
 
 def export_pytorch_to_onnx(model, dummy_input, onnx_file_path):
-    torch.onnx.export(model, dummy_input, onnx_file_path, export_params=True, opset_version=11, do_constant_folding=True, input_names=['input'], output_names=['output'])
+    torch.onnx.export(
+        model, 
+        dummy_input, 
+        onnx_file_path, 
+        export_params=True, 
+        opset_version=11, 
+        do_constant_folding=True, 
+        input_names=['input'], 
+        output_names=['output']
+    )
+    print(f"ONNX model exported to {onnx_file_path}")
 
 def build_engine(onnx_file_path, engine_file_path):
     with trt.Builder(TRT_LOGGER) as builder, builder.create_network(1) as network, trt.OnnxParser(network, TRT_LOGGER) as parser:
@@ -31,6 +41,7 @@ def build_engine(onnx_file_path, engine_file_path):
 
         with open(engine_file_path, 'wb') as f:
             f.write(engine.serialize())
+        print(f"TensorRT engine saved to {engine_file_path}")
         return engine
 
 class HostDeviceMem:
@@ -86,6 +97,8 @@ def main():
 
     # Convert ONNX model to TensorRT engine
     engine = build_engine(onnx_file_path, engine_file_path)
+    if engine is None:
+        return
 
     # Load the TensorRT engine and perform inference
     with open(engine_file_path, 'rb') as f, trt.Runtime(TRT_LOGGER) as runtime:
@@ -99,7 +112,7 @@ def main():
     np.copyto(inputs[0].host, data.ravel())
 
     output = do_inference(context, bindings=bindings, inputs=inputs, outputs=outputs, stream=stream)
-    print(output)
+    print("Inference output:", output)
 
 if __name__ == "__main__":
     main()
