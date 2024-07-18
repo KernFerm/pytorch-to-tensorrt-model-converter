@@ -4,6 +4,11 @@ import tensorrt as trt
 import pycuda.driver as cuda
 import pycuda.autoinit
 import numpy as np
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
 
@@ -18,7 +23,7 @@ def export_pytorch_to_onnx(model, dummy_input, onnx_file_path):
         input_names=['images'], 
         output_names=['output']
     )
-    print(f"ONNX model exported to {onnx_file_path}")
+    logger.info(f"ONNX model exported to {onnx_file_path}")
 
 def build_engine(onnx_file_path, engine_file_path):
     with trt.Builder(TRT_LOGGER) as builder, builder.create_network(1) as network, trt.OnnxParser(network, TRT_LOGGER) as parser:
@@ -27,19 +32,19 @@ def build_engine(onnx_file_path, engine_file_path):
 
         with open(onnx_file_path, 'rb') as model:
             if not parser.parse(model.read()):
-                print('Failed to parse the ONNX file.')
+                logger.error('Failed to parse the ONNX file.')
                 for error in range(parser.num_errors):
-                    print(parser.get_error(error))
+                    logger.error(parser.get_error(error))
                 return None
 
         engine = builder.build_cuda_engine(network)
         if engine is None:
-            print('Failed to build the engine.')
+            logger.error('Failed to build the engine.')
             return None
 
         with open(engine_file_path, 'wb') as f:
             f.write(engine.serialize())
-        print(f"TensorRT engine saved to {engine_file_path}")
+        logger.info(f"TensorRT engine saved to {engine_file_path}")
         return engine
 
 class HostDeviceMem:
@@ -109,7 +114,7 @@ def main():
     np.copyto(inputs[0].host, data.ravel())
 
     output = do_inference(context, bindings=bindings, inputs=inputs, outputs=outputs, stream=stream)
-    print("Inference output:", output)
+    logger.info("Inference output: %s", output)
 
 if __name__ == "__main__":
     main()
