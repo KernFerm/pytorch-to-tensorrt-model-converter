@@ -84,7 +84,7 @@ def main():
     model.eval()
 
     # Dummy input for the YOLO model (replace with the appropriate input shape)
-    dummy_input = torch.randn(1, 3, 640, 640)  # Typical input size for YOLO models
+    dummy_input = torch.randn(1, 3, 640, 640)  # Typical input size for YOLO models , 1, 3, 320, 320  if you like for better preformance
 
     # File paths
     onnx_file_path = 'yolo_model.onnx'
