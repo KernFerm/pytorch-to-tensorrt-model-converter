@@ -2,10 +2,8 @@ import torch
 import torch.onnx
 import tensorrt as trt
 import pycuda.driver as cuda
+import pycuda.autoinit
 import numpy as np
-
-# Initialize CUDA
-cuda.init()
 
 TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
 
@@ -17,7 +15,7 @@ def export_pytorch_to_onnx(model, dummy_input, onnx_file_path):
         export_params=True, 
         opset_version=11, 
         do_constant_folding=True, 
-        input_names=['input'], 
+        input_names=['images'], 
         output_names=['output']
     )
     print(f"ONNX model exported to {onnx_file_path}")
@@ -81,16 +79,16 @@ def do_inference(context, bindings, inputs, outputs, stream):
     return [out.host for out in outputs]
 
 def main():
-    # Load your PyTorch model from a .pt file
-    model = torch.load('your_model.pt')
+    # Load your YOLO PyTorch model from a .pt file
+    model = torch.load('yolov5s.pt')  # or 'yolov8s.pt'
     model.eval()
 
-    # Dummy input for the model (replace with the appropriate input shape)
-    dummy_input = torch.randn(1, 3, 320, 320)
+    # Dummy input for the YOLO model (replace with the appropriate input shape)
+    dummy_input = torch.randn(1, 3, 640, 640)  # Typical input size for YOLO models
 
     # File paths
-    onnx_file_path = 'model.onnx'
-    engine_file_path = 'model.trt'
+    onnx_file_path = 'yolo_model.onnx'
+    engine_file_path = 'yolo_model.trt'
 
     # Export PyTorch model to ONNX
     export_pytorch_to_onnx(model, dummy_input, onnx_file_path)
@@ -108,7 +106,7 @@ def main():
     inputs, outputs, bindings, stream = allocate_buffers(engine)
 
     # Example input data
-    data = np.random.random((1, 3, 320, 320)).astype(np.float32)
+    data = np.random.random((1, 3, 640, 640)).astype(np.float32)
     np.copyto(inputs[0].host, data.ravel())
 
     output = do_inference(context, bindings=bindings, inputs=inputs, outputs=outputs, stream=stream)
