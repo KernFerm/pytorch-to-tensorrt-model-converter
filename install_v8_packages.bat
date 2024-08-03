@@ -29,7 +29,7 @@ call :check_error "Failed to create virtual environment."
 
 REM Activate the virtual environment
 echo Activating virtual environment...
-call venv_v8\Scripts\activate
+call venv_v8\Scripts\activate.bat
 call :check_error "Failed to activate virtual environment."
 
 REM Upgrade pip
