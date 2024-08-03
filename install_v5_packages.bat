@@ -51,4 +51,3 @@ echo YOLO v5 packages installed successfully.
 
 endlocal
 exit /b 0
-
