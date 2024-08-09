@@ -37,10 +37,25 @@ echo Upgrading pip...
 python -m pip install --upgrade pip
 call :check_error "Failed to upgrade pip."
 
-REM Install required packages
-echo Installing required packages for YOLO v8...
-pip install torch tensorrt pycuda numpy
-call :check_error "Failed to install one or more packages."
+REM Install torch
+echo Installing torch...
+pip install torch
+call :check_error "Failed to install torch."
+
+REM Install tensorrt
+echo Installing tensorrt...
+pip install tensorrt
+call :check_error "Failed to install tensorrt."
+
+REM Install pycuda
+echo Installing pycuda...
+pip install pycuda
+call :check_error "Failed to install pycuda."
+
+REM Install numpy
+echo Installing numpy...
+pip install numpy
+call :check_error "Failed to install numpy."
 
 REM Deactivate the virtual environment
 echo Deactivating virtual environment...
