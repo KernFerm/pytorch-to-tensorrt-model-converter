@@ -64,5 +64,7 @@ call :check_error "Failed to deactivate virtual environment."
 
 echo YOLO v5 packages installed successfully.
 
+pause
+
 endlocal
 exit /b 0
