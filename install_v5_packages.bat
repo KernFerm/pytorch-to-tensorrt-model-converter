@@ -1,84 +1,76 @@
 @echo off
 setlocal
 
-REM Function to check and handle errors
-:check_error
-if %errorlevel% neq 0 (
-    echo Error occurred: %1
-    call :cleanup
-    goto end_script
-)
-
-REM Function to clean up in case of failure
-:cleanup
-if exist venv_v5 (
-    echo Cleaning up...
-    rmdir /s /q venv_v5
-)
-goto :EOF
-
-REM Function to ask user if they want to close the window
-:ask_to_continue
-set /p continue=Do you want to continue? (Y/N): 
-if /I "%continue%"=="N" goto end_script
-if /I not "%continue%"=="Y" goto ask_to_continue
-
 REM Check if Python is installed
-echo Checking Python installation...
 python --version >nul 2>&1
-call :check_error "Python is not installed. Please install Python 3.11."
-call :ask_to_continue
+if %errorlevel% neq 0 (
+    echo Python is not installed. Please install Python before running this script.
+    pause
+    exit /b 1
+)
 
 REM Create a virtual environment
-echo Creating virtual environment for YOLO v5...
+echo Creating a virtual environment...
 python -m venv venv_v5
-call :check_error "Failed to create virtual environment."
-call :ask_to_continue
+if %errorlevel% neq 0 (
+    echo Failed to create a virtual environment.
+    pause
+    exit /b 1
+)
 
 REM Activate the virtual environment
-echo Activating virtual environment...
+echo Activating the virtual environment...
 call venv_v5\Scripts\activate
-call :check_error "Failed to activate virtual environment."
-call :ask_to_continue
+if %errorlevel% neq 0 (
+    echo Failed to activate the virtual environment.
+    pause
+    exit /b 1
+)
 
 REM Upgrade pip
 echo Upgrading pip...
 python -m pip install --upgrade pip
-call :check_error "Failed to upgrade pip."
-call :ask_to_continue
+if %errorlevel% neq 0 (
+    echo Failed to upgrade pip.
+    pause
+    exit /b 1
+)
 
-REM Install torch
-echo Installing torch...
+REM Install required packages individually with progress
+echo [----------] Installing packages: 0%%
 pip install torch
-call :check_error "Failed to install torch."
-call :ask_to_continue
+if %errorlevel% neq 0 (
+    echo Failed to install torch.
+    pause
+    exit /b 1
+)
+echo [##--------] 25%% Torch installed.
 
-REM Install tensorrt
-echo Installing tensorrt...
 pip install tensorrt
-call :check_error "Failed to install tensorrt."
-call :ask_to_continue
+if %errorlevel% neq 0 (
+    echo Failed to install tensorrt.
+    pause
+    exit /b 1
+)
+echo [####------] 50%% TensorRT installed.
 
-REM Install pycuda
-echo Installing pycuda...
 pip install pycuda
-call :check_error "Failed to install pycuda."
-call :ask_to_continue
+if %errorlevel% neq 0 (
+    echo Failed to install pycuda.
+    pause
+    exit /b 1
+)
+echo [######----] 75%% PyCUDA installed.
 
-REM Install numpy
-echo Installing numpy...
 pip install numpy
-call :check_error "Failed to install numpy."
-call :ask_to_continue
+if %errorlevel% neq 0 (
+    echo Failed to install numpy.
+    pause
+    exit /b 1
+)
+echo [##########] 100%% Numpy installed.
 
-REM Deactivate the virtual environment
-echo Deactivating virtual environment...
-call deactivate
-call :check_error "Failed to deactivate virtual environment."
-
-echo YOLO v5 packages installed successfully.
-
-:end_script
+REM Completion message
+echo All packages installed successfully. Close this window to exit.
 pause
-
-endlocal
+exit /b 0
