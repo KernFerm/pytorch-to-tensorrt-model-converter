@@ -1,196 +1,164 @@
-# Pytorch to Tensorrt Model Converter
+# Pytorch to TensorRT Model Converter
 
-This project provides a comprehensive Python script to convert a PyTorch model to an ONNX model and then to a TensorRT engine for NVIDIA GPUs, followed by performing inference using the TensorRT engine. This script is designed to handle the entire conversion process seamlessly.
+This project provides a comprehensive Python script to convert a PyTorch model to an ONNX model and then to a TensorRT engine for NVIDIA GPUs, followed by performing inference using the TensorRT engine. The script handles the entire conversion process seamlessly.
 
-## how to download the repo first time users
+## How to Download the Repo for First-Time Users
 
-  - click link to read [**Instructions**](https://www.gitprojects.fnbubbles420.org/how-to-download-repos)
+To get started with this repository, please refer to the detailed instructions available [here](https://www.gitprojects.fnbubbles420.org/how-to-download-repos).
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+These instructions will help you set up the project on your local machine for development and testing purposes.
 
-# FOR NVIDIA GPU ONLY 
+### NVIDIA GPU Required
+
+**Note:** This script is specifically designed to work with NVIDIA GPUs.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them.
-### If you dont have a pet python here is a couple below:
-- **YOU ONLY NEED ONLY VERSION OF PYTHON TO RUN THIS !!**
-- [Python 3.11.6](https://github.com/KernFerm/Py3.11.6installer)
-- [Python 3.11.9](https://github.com/KernFerm/Py3.11.9installer)
-- [Python 3.12.1](https://github.com/KernFerm/Py3.12.1-installer-batch)
-- PyTorch 1.6 or later
-- TensorRT 7.0 or later
-- CUDA Toolkit 10.2 or later
+Before running the script, ensure you have the following software installed:
 
-# YOLO PyTorch to TensorRT Conversion Logging
+- **Python Version:** You only need one of the following versions installed:
+  - [Python 3.11.6](https://github.com/KernFerm/Py3.11.6installer)
+  - [Python 3.11.9](https://github.com/KernFerm/Py3.11.9installer)
+  - [Python 3.12.1](https://github.com/KernFerm/Py3.12.1-installer-batch)
+- **Frameworks & Libraries:**
+  - PyTorch 1.6 or later
+  - TensorRT 7.0 or later
+  - CUDA Toolkit 10.2 or later
 
-This script converts a YOLO PyTorch model to an ONNX model and then to a TensorRT engine. It also performs inference using the TensorRT engine. The logging setup helps track the execution process and outputs important information and errors.
+## Logging
 
-## Logging Configuration
+The script includes a logging configuration to track the execution process and outputs important information and errors.
 
-The script uses the Python `logging` module to log events. The logging is configured to output messages to the console with the following format:
+### Logging Configuration
 
-Where:
-- `YYYY-MM-DD HH:MM:SS,sss` is the timestamp
-- `LEVEL` is the logging level (e.g., INFO, ERROR)
-- `Message` is the log message
+- The script logs messages to the console in the following format: `YYYY-MM-DD HH:MM:SS,sss - LEVEL - Message`
+- The logging level is set to `INFO`, capturing messages of severity `INFO` and higher.
 
-The logging level is set to `INFO`, meaning it will log messages with a severity of `INFO` and higher (e.g., `INFO`, `WARNING`, `ERROR`).
+### What is Logged
 
-## What is Logged
+- **ONNX Model Export:**
+  - Logs successful export of the PyTorch model to ONNX format.
+- **TensorRT Engine Building:**
+  - Logs errors during ONNX file parsing and engine building.
+  - Logs successful saving of the TensorRT engine.
+- **Inference:**
+  - Logs the output from performing inference with the TensorRT engine.
 
-### ONNX Model Export
+### Example Log Output
 
-1. **Exporting ONNX Model:**
-   - **Message:** `ONNX model exported to {onnx_file_path}`
-   - **Level:** INFO
-   - **Description:** This logs the successful export of the PyTorch model to ONNX format.
-
-### TensorRT Engine Building
-
-2. **Parsing ONNX File:**
-   - **Message:** `Failed to parse the ONNX file.`
-   - **Level:** ERROR
-   - **Description:** This logs an error if the ONNX parser fails to parse the ONNX file.
-
-3. **ONNX Parsing Errors:**
-   - **Message:** Details of the ONNX parsing errors.
-   - **Level:** ERROR
-   - **Description:** This logs specific errors encountered during the ONNX file parsing.
-
-4. **Building TensorRT Engine:**
-   - **Message:** `Failed to build the engine.`
-   - **Level:** ERROR
-   - **Description:** This logs an error if the TensorRT engine fails to build.
-
-5. **Saving TensorRT Engine:**
-   - **Message:** `TensorRT engine saved to {engine_file_path}`
-   - **Level:** INFO
-   - **Description:** This logs the successful saving of the TensorRT engine to a file.
-
-### Inference
-
-6. **Inference Output:**
-   - **Message:** `Inference output: {output}`
-   - **Level:** INFO
-   - **Description:** This logs the output from performing inference with the TensorRT engine.
-
-- You will see the log messages in the console, providing information about the execution process and any issues encountered.
-
-## Example Output
-
-- Here is an example of what the log output might look like:
-
-```
+```plaintext
 [2024-07-17 12:34:56,789] - INFO - ONNX model exported to yolo_model.onnx
 [2024-07-17 12:35:00,123] - INFO - TensorRT engine saved to yolo_model.trt
 [2024-07-17 12:35:05,456] - INFO - Inference output: [array([[[...]]])]
 ```
 
-### Installing
+### Installation
+- Follow these steps to set up your development environment:
 
-A step-by-step series of examples that tell you how to get a development environment running.
+## For Users Familiar with `Pipfile` and `Pipenv`
 
-### For Users Familiar with Pipfile and Pipenv
+- If you're familiar with pipenv and prefer to manage dependencies using a `Pipfile`:
 
-If you are familiar with Pipfile and wish to use `pipenv` for managing dependencies, ensure you have Python `3.11.6`
-
-- If you do not have `Pet Python` Recommended **Python 3.11.6** [Python 3.11.6](https://github.com/KernFerm/Py3.11.6installer)
-
-1. **Install pipenv if you haven't already:**
-
+1. Install pipenv if you haven't already:
 ```
 pip install pipenv
 ```
 
 2. Clone the Repository:
-
 ```
 git clone https://www.github.com/kernferm/pytorch-to-tensorrt-model-converter
 cd pytorch-to-tensorrt-model-converter
 ```
-
 3. Install Dependencies:
-
 ```
 pipenv install
 ```
-
 4. Activate the Virtual Environment:
-
 ```
 pipenv shell
 ```
 
 ## For Users Not Using Pipenv
-
-- If you prefer not to use pipenv, follow these instructions:
+- If you prefer not to use `pipenv`, follow these instructions:
 
 1. Clone the Repository:
-
 ```
 git clone https://www.github.com/kernferm/pytorch-to-tensorrt-model-converter
 cd pytorch-to-tensorrt-model-converter
 ```
-
 2. Create and Activate a Virtual Environment:
-
 - On Windows:
-
 ```
 python -m venv venv
 .\venv\Scripts\activate
 ```
-
 - On Unix or MacOS:
-
 ```
 python3 -m venv venv
 source venv/bin/activate
 ```
-
 3. Install Dependencies:
-
 ```
 pip install torch torchvision tensorrt pycuda numpy
 ```
-or you can use the `requirements.bat` or the `requirements.txt`
+- **You can also use the provided `requirements.bat` or `requirements.txt` files.**
 
 ## Running the Program
 
-After setting up your environment, you can run the program as follows:
+- After setting up your environment, you can run the program as follows:
 
-1. **Activate the Virtual Environment:**
 
-   If you're using `pipenv`, ensure your virtual environment is activated:
+### Step 1: Place Your PyTorch Model
 
-   ```bash
-   pipenv shell
-   ```
+- **Model Location:** Place the PyTorch model you wish to convert in the root directory of the cloned repository.
+- **Supported Formats:** The script expects the model to be in `.pt` format. `Example: yolov5s.pt.`
 
-   If you're using a traditional virtual environment:
+### Step 2: Update the Script
 
-   - On Windows:
+- **File to Update:** Edit the `main.py` script to point to your model file.
+- **Code to Update:** 
+Replace the following line in `main.py`:
+```
+model = torch.load('yolov5s.pt')  # or 'yolov8s.pt'
+```
+- with the path to your model:
+```
+model = torch.load('your_model_file.pt')
+```
 
-     ```cmd
-     .\venv\Scripts\activate
-     ```
+### Step 3: Activate the Virtual Environment
+- If you're using `pipenv`, ensure your virtual environment is activated:
+```
+pipenv shell
+```
 
-   - On Unix or MacOS:
+- If you're using a traditional virtual environment:
+- On Windows:
+```
+.\venv\Scripts\activate
+```
+- On Unix or MacOS:
+```
+source venv/bin/activate
+```
 
-     ```bash
-     source venv/bin/activate
-     ```
+### Step 4: Run the Program
+- Run the script using the following command:
 
-2. **Run the Program:**
+```
+python main.py
+```
 
-   Replace `main.py` with the name of your program file if it's different.
+### Step 5: Check Outputs
 
-   ```bash
-   python main.py
-   ```
+- **ONNX Model:** The ONNX model will be saved in the root directory with a `.onnx` extension.
+- **TensorRT Engine:** The TensorRT engine will be saved in the root directory with a `.trt` extension.
 
-   Follow any program-specific instructions or command line arguments as detailed in your project's documentation.
 
+## Contributions
+- Feel free to contribute to this project by creating pull requests, submitting issues, or providing feedback.
+
+## License
+- This project is licensed under the [Apache License](https://github.com/KernFerm/pytorch-to-tensorrt-model-converter/blob/main/LICENSE)
