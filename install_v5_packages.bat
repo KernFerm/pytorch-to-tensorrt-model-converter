@@ -6,7 +6,7 @@ REM Function to check and handle errors
 if %errorlevel% neq 0 (
     echo Error occurred: %1
     call :cleanup
-    exit /b %errorlevel%
+    goto end_script
 )
 
 REM Function to clean up in case of failure
@@ -20,7 +20,7 @@ goto :EOF
 REM Function to ask user if they want to close the window
 :ask_to_continue
 set /p continue=Do you want to continue? (Y/N): 
-if /I "%continue%"=="N" exit /b 0
+if /I "%continue%"=="N" goto end_script
 if /I not "%continue%"=="Y" goto ask_to_continue
 
 REM Check if Python is installed
@@ -78,7 +78,7 @@ call :check_error "Failed to deactivate virtual environment."
 
 echo YOLO v5 packages installed successfully.
 
+:end_script
 pause
 
 endlocal
-exit /b 0
