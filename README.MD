@@ -67,6 +67,7 @@ pip install pipenv
 ```
 
 2. Clone the Repository:
+  - make sure to make a folder on `Desktop` then `CD` it in `CMD.exe` then do the `Git Clone`.
 ```
 git clone https://www.github.com/kernferm/pytorch-to-tensorrt-model-converter
 cd pytorch-to-tensorrt-model-converter
